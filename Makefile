@@ -1,6 +1,18 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2017/08/31 13:54:12 by cjacquet          #+#    #+#              #
+#    Updated: 2017/08/31 13:54:14 by cjacquet         ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 MLX_FLAG	=	-lmlx -framework OpenGL -framework AppKit
 CFLAGS		=	-Wextra -Wall -Werror -O3 -Ofast
-INCL		=	fractol.h
+INCL		=	wolf.h
 LIB_FLAG	=	-Ilibft/ libft/libft.a
 SRCS		=	main.c \
 				error.c \
@@ -17,9 +29,10 @@ SRCS		=	main.c \
 				newton.c \
 				complex_calc.c \
 				color.c \
+				again.c \
 				help.c
 OBJ			=	$(SRCS:.c=.o)
-NAME		=	fractol
+NAME		=	wolf3d
 
 all : $(NAME)
 
