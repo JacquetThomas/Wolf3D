@@ -1,42 +1,56 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   tools.c                                            :+:      :+:    :+:   */
+/*   free_x.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2017/09/01 14:55:33 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/01 16:13:54 by cjacquet         ###   ########.fr       */
+/*   Created: 2017/07/25 15:26:20 by cjacquet          #+#    #+#             */
+/*   Updated: 2017/09/01 16:37:12 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-double		deg2rad(double angle)
-{
-	return (M_PI * (angle) / 180 );
-}
-
-double		rad2deg(double angle)
-{
-	return (180 * (angle) / M_PI);
-}
-
-int		test_line(char *str)
+void	free_tab(char **tab)
 {
 	int		i;
 
 	i = 0;
-	while (str[i])
+	while (tab[i])
 	{
-		if (!is_white(str[i]) && str[i] != '-' && !is_num(str[i]))
-			return (1);
+		free(tab[i]);
 		i++;
 	}
-	return (0);
+	free(tab);
 }
 
-int		is_num(char c)
+void	free_no_win(t_env *env)
 {
-	return (c == '0' || c == '1' || c == '2' || c == '4');
+	if (env->tab_file)
+		free_tab(env->tab_file);
+}
+
+void	free_all(t_env *env)
+{
+	free_no_win(env);
+	if (env->line)
+		free(env->line);
+//	if (env->win)
+//		mlx_destroy_window(env->mlx, env->win);
+	if (env->map)
+		free_map(env);
+}
+
+void	free_map(t_env *env)
+{
+	int	i;
+
+	i = 0;
+	while (i < env->max_y)
+	{
+		free(env->map[i]);
+		i++;
+	}
+	free(env->map);
 }

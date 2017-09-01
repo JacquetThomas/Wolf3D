@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 13:36:33 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/01 14:58:56 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/01 16:42:06 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -128,13 +128,22 @@ typedef struct			s_color
 */
 void					error_init(t_env *env, int mode);
 void					error_str(char *str, t_env *env, int mode);
-void					free_all(t_env *env);
 
 /*
 ** Functions of tools.c
 */
 double					rad2deg(double angle);
 double					deg2rad(double angle);
+int						test_line(char *s);
+int						is_num(char c);
+
+/*
+** Function of free_x.c
+*/
+void					free_tab(char **tab);
+void					free_no_win(t_env *env);
+void					free_all(t_env *env);
+void					free_map(t_env *enc);
 
 /*
 ** Functions of parse.c

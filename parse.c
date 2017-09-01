@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 13:32:31 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/01 13:35:58 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/01 16:44:27 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,7 @@ void			get_map(char *file, t_env *env)
 		error_str("Map doesn't exist dude.", env, 0);
 	env->tab_file = ft_strsplit(env->line, '\n');
 	env->max_y = tab_len(env->tab_file);
-	if (env->max_y > 1 && (env->max_x = check_nb(env->tab_file)) >= 0)
+	if (env->max_y > 2 && (env->max_x = check_nb(env->tab_file)) > 2)
 		set_map(env, env->tab_file);
 	else
 		error_str("Wrong map_file", env, 1);
@@ -61,7 +61,7 @@ int				*dup_nb(t_env *env, char *line)
 		if (cpt < env->max_x)
 		{
 			nbr[cpt++] = ft_atoi(&line[i]);
-			while (line[i] && ft_isdigit(line[i]))
+			while (line[i] && is_num(line[i]))
 				i++;
 		}
 	}
@@ -101,14 +101,14 @@ int				count_nb(char *s)
 	cpt = 0;
 	while (s[i])
 	{
-		if (!is_white(s[i]) && !ft_isdigit(s[i]))
+		if (!is_white(s[i]) && !is_num(s[i]))
 			return (-1);
 		while (s[i] && is_white(s[i]))
 			i++;
-		if (s[i] && !is_white(s[i]) && ft_isdigit(s[i]))
+		if (s[i] && !is_white(s[i]) && is_num(s[i]))
 		{
 			cpt++;
-			while (s[i] && ft_isdigit(s[i]))
+			while (s[i] && is_num(s[i]))
 				i++;
 		}
 		else

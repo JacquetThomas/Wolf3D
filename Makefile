@@ -6,7 +6,7 @@
 #    By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/31 13:54:12 by cjacquet          #+#    #+#              #
-#    Updated: 2017/09/01 14:59:32 by cjacquet         ###   ########.fr        #
+#    Updated: 2017/09/01 16:36:01 by cjacquet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ SRCS		=	main.c \
 				mlx.c \
 				parse.c \
 				init.c \
+				free_x.c \
 				help.c
 #				draaw.c \
 #				key_hook.c \

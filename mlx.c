@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 15:52:37 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/01 15:09:14 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/01 16:42:55 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@ void	set_var(t_env *env)
 	env->cam.little_a = env->cam.angle / (double)W_WIDTH;
 	printf("%f\n", env->cam.little_a);
 	env->cam.dist_e = (double)(W_WIDTH / 2) / tan(deg2rad(env->cam.angle / 2));
+	env->music = 0;
 }
 
 void	pixel_put_image(unsigned long img_color, int x, int y,
