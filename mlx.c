@@ -6,37 +6,50 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 15:52:37 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/08/31 14:49:22 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/01 15:09:14 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-void		set_var(t_env *env)
+void	line(t_point b, t_point c, t_env *env)
 {
-	env->px = 0;
-	env->py = 0;
-	env->move = 0.1;
-	env->move_r = 0;
-	env->move_i = 0;
-	env->max_x = 2.0;
-	env->max_y = 2.0;
-	env->min_x = -2.0;
-	env->min_y = -2.0;
-	env->julia.r = 0.285;
-	env->julia.i = 0.01;
-	env->c_lock = 0;
-	env->color_m = 5;
-	env->color_picker = 0;
-	env->music = 0;
-	env->help = 0;
-	env->grey = 0;
-	env->nvar = (env->fract_name == 3) ? 1 : 0;
-	env->max_i = 200000000;//(env->fract_name == 2 || env->fract_name == 3) ? 35 : 72;
-	env->auto_i = 0;
+	int				a[6];
+
+	//env->color = set_color(env->map[env->i][env->j], env->black, env);
+	a[0] = abs(c.x - b.x);
+	a[1] = abs(c.y - b.y);
+	a[4] = b.x < c.x ? 1 : -1;
+	a[5] = b.y < c.y ? 1 : -1;
+	a[2] = (a[0] > a[1] ? a[0] : -a[1]) / 2;
+	while (1)
+	{
+		pixel_put_image(env->color, b.x, b.y, env);
+		if (b.x == c.x && b.y == c.y)
+			break ;
+		a[3] = a[2];
+		if (a[3] > -a[0])
+		{
+			a[2] -= a[1];
+			b.x += a[4];
+		}
+		if (a[3] < a[1])
+		{
+			a[2] += a[0];
+			b.y += a[5];
+		}
+	}
 }
 
-void		pixel_put_image(unsigned long img_color, int x, int y,
+void	set_var(t_env *env)
+{
+	env->cam.angle = 60.0;
+	env->cam.little_a = env->cam.angle / (double)W_WIDTH;
+	printf("%f\n", env->cam.little_a);
+	env->cam.dist_e = (double)(W_WIDTH / 2) / tan(deg2rad(env->cam.angle / 2));
+}
+
+void	pixel_put_image(unsigned long img_color, int x, int y,
 		t_env *env)
 {
 	unsigned char	r;

@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 15:31:30 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/08/31 13:40:42 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/01 14:50:05 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 void	init_mlx(t_env *env)
 {
 	set_var(env);
-	if (!(env->mlx = mlx_init()))
+/*	if (!(env->mlx = mlx_init()))
 		error_init(env, 1);
 	if (!(env->win = mlx_new_window(env->mlx, W_WIDTH, W_HEIGHT + 100,
 					"Fract'ol")))
@@ -32,28 +32,7 @@ void	init_mlx(t_env *env)
 		error_init(env, 2);
 	make_it_b(env);
 	if (env->music)
-		system("afplay wait.mp3 &");
-}
-
-char	*fract_name(t_env *env)
-{
-	if (env->fract_name == 0)
-		return ("Mandelbrot");
-	if (env->fract_name == 1)
-		return ("Julia");
-	if (env->fract_name == 2)
-		return ("Newton");
-	if (env->fract_name == 3)
-		return ("Variation of Newton");
-	if (env->fract_name == 4)
-		return ("Burning ship");
-	if (env->fract_name == 5)
-		return ("Beach");
-	if (env->fract_name == 6)
-		return ("Melting-pot");
-	if (env->fract_name == 7)
-		return ("Tricorn");
-	return ("wolf");
+		system("afplay wait.mp3 &");*/
 }
 
 void	pixel_b(unsigned int img_color, int x, int y, t_env *env)

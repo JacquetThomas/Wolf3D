@@ -6,7 +6,7 @@
 #    By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/31 13:54:12 by cjacquet          #+#    #+#              #
-#    Updated: 2017/08/31 13:54:14 by cjacquet         ###   ########.fr        #
+#    Updated: 2017/09/01 14:59:32 by cjacquet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,20 +17,16 @@ LIB_FLAG	=	-Ilibft/ libft/libft.a
 SRCS		=	main.c \
 				error.c \
 				str_tools.c \
+				tools.c \
 				mlx.c \
-				draw.c \
-				key_hook.c \
-				mouse_hook.c \
+				parse.c \
 				init.c \
-				update.c \
-				mandelbrot.c \
-				julia.c \
-				burning_ship.c \
-				newton.c \
-				complex_calc.c \
-				color.c \
-				again.c \
 				help.c
+#				draaw.c \
+#				key_hook.c \
+#				mouse_hook.c
+#				update.c \
+#				color.c 
 OBJ			=	$(SRCS:.c=.o)
 NAME		=	wolf3d
 

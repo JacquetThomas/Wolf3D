@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 13:36:33 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/08/31 13:37:36 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/01 14:58:56 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,15 +15,22 @@
 
 # include "libft/libft.h"
 # include "minilibx/mlx.h"
+# include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
+# include <unistd.h>
 # include <math.h>
-# define USAGE "Usage : ./fractol [Mandelbrot | Julia | Newton]"
+# define USAGE "Usage : ./wolf3d"
+# define BUFF_SIZE 1001
+
+/*
+** WALL_H 64 mean 64px of height for each "wall in real"
+*/
+# define WALL_H 64
 
 /*
 ** Define colors
 */
-# define MENGER 0xBD8D46
 # define WHITE 0xFFFFFF
 # define RED 0xFF0000
 # define ORANGE 0xED7F10
@@ -44,8 +51,8 @@
 # define LEFT 123
 # define RIGHT 124
 # define MAX_ITER 42
-# define W_WIDTH 600
-# define W_HEIGHT 600
+# define W_WIDTH 320
+# define W_HEIGHT 200
 
 typedef struct			s_hsl
 {
@@ -55,28 +62,39 @@ typedef struct			s_hsl
 	float				m;
 }						t_hsl;
 
-typedef struct			s_plex
+typedef struct			s_pos
 {
-	double				r;
-	double				i;
-}						t_plex;
+	double				x;
+	double				y;
+}						t_pos;
+
+typedef struct			s_point
+{
+	int					x;
+	int					y;
+}						t_point;
+
+typedef struct			s_cam
+{
+	t_pos				pos;
+	t_point				point;
+	double				angle;
+	double				little_a;
+	double				dist_e;
+	double				dir;
+}						t_cam;
 
 typedef struct			s_env
 {
+	char				*line;
+	char				**tab_file;
+	int					**map;
+	int					max_y;
+	int					max_x;
+	t_cam				cam;
 	double				zoom;
-	double				px;
-	double				py;
-	double				max_x;
-	double				max_y;
-	double				min_x;
-	double				min_y;
-	int					move_r;
-	int					move_i;
 	int					help;
-	int					fract_name;
 	int					nvar;
-	int					grey;
-	t_plex				julia;
 	double				move;
 	void				*mlx;
 	void				*win;
@@ -91,9 +109,7 @@ typedef struct			s_env
 	int					sizeline;
 	int					sizeline_b;
 	int					endian;
-	int					iter;
-	int					auto_i;
-	int					max_i;
+	unsigned int		color;
 	int					music;
 }						t_env;
 
@@ -107,30 +123,6 @@ typedef struct			s_color
 	int					bb;
 }						t_color;
 
-typedef struct			s_calc
-{
-	t_plex				point;
-	t_plex				new;
-	t_plex				old;
-}						t_calc;
-
-/*
-** Functions of newton.c
-*/
-int						newton_calc(int x, int y, t_env *env);
-t_plex					f(t_plex plx, int nvar);
-t_plex					df(t_plex plx, int nvar);
-void					newton(t_env *env);
-
-/*
-** Functions of complex_calc.c
-*/
-t_plex					c_mul(t_plex un, t_plex deux);
-t_plex					c_div(t_plex un, t_plex deux);
-t_plex					c_sous(t_plex un, t_plex deux);
-t_plex					c_add(t_plex un, t_plex deux);
-t_plex					map(int x, int y, t_env *env, int pxy);
-
 /*
 ** Functions of error.c
 */
@@ -139,27 +131,19 @@ void					error_str(char *str, t_env *env, int mode);
 void					free_all(t_env *env);
 
 /*
-** Functions of mandelbrot.c
+** Functions of tools.c
 */
-int						mandelbrot_calc(int x, int y, t_env *env);
-void					mandelbrot(t_env *env);
-void					melting_pot(t_env *env);
-int						melting_calc(int x, int y, t_env *env);
-
-int						menger_calc(int x, int y, t_env *env);
-void					menger(t_env *env);
+double					rad2deg(double angle);
+double					deg2rad(double angle);
 
 /*
-** Functions of burning_ship.c
+** Functions of parse.c
 */
-int						burning_calc(int x, int y, t_env *env);
-void					burning_ship(t_env *env);
-
-/*
-** Functions of julia.c
-*/
-int						julia_calc(int x, int y, t_env *env);
-void					julia(t_env *env);
+void					get_map(char *file, t_env *env);
+void					set_map(t_env *env, char **tab_file);
+int						*dup_nb(t_env *env, char *line);
+int						check_nb(char **s);
+int						count_nb(char *s);
 
 /*
 ** Functions of mlx.c
@@ -172,9 +156,6 @@ void					pixel_put_image(unsigned long img_color, int x, int y,
 ** Functions of update.c
 */
 void					zoom(int keycode, t_env *env);
-void					maj_var(t_env *env);
-void					maj_julia(t_env *env);
-int						maj_iter(int fract);
 
 /*
 ** Functions of color.c
@@ -208,14 +189,14 @@ int						key_hook5(int keycode, t_env *env);
 int						exit_cross(t_env *env);
 int						mouse_hook(int button, int x, int y, t_env *env);
 int						mouse_move(int x, int y, t_env *env);
-void					zoom_in(t_plex m, t_env *env);
-void					zoom_out(t_plex m, t_env *env);
 
 /*
 ** Functions of str_tools.c
 */
-int						is_fract_name(char *str);
-int						is_alnum_comma(char c);
+t_point					search_player(char *map, t_env *env);
+int						tab_len(char **tab);
+int						is_wolfmap(char *c);
+char					*read_file(int fd);
 int						is_white(char c);
 
 /*
@@ -230,7 +211,6 @@ void					destroy_help(t_env *env);
 ** Functions of init
 */
 void					init_mlx(t_env *env);
-char					*fract_name(t_env *env);
 void					make_it_uni(t_env *env, unsigned int color);
 void					make_it_b(t_env *env);
 void					pixel_b(unsigned int color, int x, int y, t_env *env);
