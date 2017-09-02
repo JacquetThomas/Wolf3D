@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 13:36:33 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/01 16:42:06 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/02 17:03:41 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,7 +26,9 @@
 /*
 ** WALL_H 64 mean 64px of height for each "wall in real"
 */
-# define WALL_H 64
+# define W_HEIGHT 400
+# define W_WIDTH 640
+# define WALL_H 128
 
 /*
 ** Define colors
@@ -50,9 +52,6 @@
 # define DOWN 125
 # define LEFT 123
 # define RIGHT 124
-# define MAX_ITER 42
-# define W_WIDTH 320
-# define W_HEIGHT 200
 
 typedef struct			s_hsl
 {
@@ -62,11 +61,11 @@ typedef struct			s_hsl
 	float				m;
 }						t_hsl;
 
-typedef struct			s_pos
+typedef struct			s_dpoint
 {
 	double				x;
 	double				y;
-}						t_pos;
+}						t_dpoint;
 
 typedef struct			s_point
 {
@@ -76,13 +75,25 @@ typedef struct			s_point
 
 typedef struct			s_cam
 {
-	t_pos				pos;
-	t_point				point;
+	t_dpoint			plane;
+	t_dpoint			realpos;
+	t_point				pos;
+	t_point				dir;
 	double				angle;
 	double				little_a;
 	double				dist_e;
-	double				dir;
 }						t_cam;
+
+typedef struct			s_ray
+{
+	double				wall_dist;
+	t_dpoint			pos;
+	t_dpoint			dir;
+	t_dpoint			side_dist;
+	t_dpoint			delta_dist;
+	t_point				map;
+	t_point				step;
+}						t_ray;
 
 typedef struct			s_env
 {
@@ -92,6 +103,9 @@ typedef struct			s_env
 	int					max_y;
 	int					max_x;
 	t_cam				cam;
+	t_ray				ray;
+	t_point				wall_h;
+	int					side;
 	double				zoom;
 	int					help;
 	int					nvar;
@@ -130,10 +144,21 @@ void					error_init(t_env *env, int mode);
 void					error_str(char *str, t_env *env, int mode);
 
 /*
+** Functions of raycast.c
+*/
+void					call_raycast(t_env *env);
+void					init_ray(int x, t_cam *cam, t_env *env);
+void					init_ray2(t_ray *ray);
+void					dda(t_ray *ray, t_env *env);
+void					calc_dist(t_ray *ray, t_env *env);
+
+/*
 ** Functions of tools.c
 */
 double					rad2deg(double angle);
 double					deg2rad(double angle);
+t_point					init_point(int x, int y);
+t_dpoint				init_dpoint(double x, double y);
 int						test_line(char *s);
 int						is_num(char c);
 
@@ -157,6 +182,8 @@ int						count_nb(char *s);
 /*
 ** Functions of mlx.c
 */
+void					line(t_point b, t_point c, t_env *env);
+void					put_line(int x, t_env *env);
 void					set_var(t_env *env);
 void					pixel_put_image(unsigned long img_color, int x, int y,
 		t_env *env);

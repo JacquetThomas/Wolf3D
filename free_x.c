@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/25 15:26:20 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/01 16:37:12 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/02 14:09:34 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,8 +36,8 @@ void	free_all(t_env *env)
 	free_no_win(env);
 	if (env->line)
 		free(env->line);
-//	if (env->win)
-//		mlx_destroy_window(env->mlx, env->win);
+	if (env->win)
+		mlx_destroy_window(env->mlx, env->win);
 	if (env->map)
 		free_map(env);
 }

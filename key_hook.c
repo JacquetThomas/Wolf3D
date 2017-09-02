@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/25 12:46:41 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/08/31 13:41:08 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/02 11:46:45 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int		key_hook(int keycode, t_env *env)
 {
-	if (keycode == 35)
+/*	if (keycode == 35)
 	{
 		env->color_picker = (env->color_picker) ? 0 : 1;
 		if (env->color_picker)
@@ -34,13 +34,13 @@ int		key_hook(int keycode, t_env *env)
 			}
 		}
 	}
-	key_hook2(keycode, env);
+*/	key_hook2(keycode, env);
 	return (1);
 }
 
 int		key_hook2(int keycode, t_env *env)
 {
-	if ((keycode >= 18 && keycode <= 23) || keycode == 26 || keycode == 28)
+/*	if ((keycode >= 18 && keycode <= 23) || keycode == 26 || keycode == 28)
 	{
 		if (keycode == 18)
 			env->fract_name = 0;
@@ -60,13 +60,13 @@ int		key_hook2(int keycode, t_env *env)
 			env->fract_name = 7;
 		maj_var(env);
 	}
-	key_hook3(keycode, env);
+*/	key_hook3(keycode, env);
 	return (1);
 }
 
 int		key_hook3(int keycode, t_env *env)
 {
-	if (keycode == 4)
+/*	if (keycode == 4)
 	{
 		if (env->help)
 			destroy_help(env);
@@ -89,13 +89,13 @@ int		key_hook3(int keycode, t_env *env)
 				system("afplay psych.mp3 &");
 		}
 	}
-	key_hook4(keycode, env);
+*/	key_hook4(keycode, env);
 	return (1);
 }
 
 int		key_hook4(int keycode, t_env *env)
 {
-	if (keycode == 27 || keycode == 24)
+/*	if (keycode == 27 || keycode == 24)
 		zoom(keycode, env);
 	if (keycode == 37)
 		env->c_lock = (env->c_lock) ? 0 : 1;
@@ -111,13 +111,13 @@ int		key_hook4(int keycode, t_env *env)
 		env->grey = (env->grey) ? 0 : 1;
 	if (keycode == 6)
 		maj_var(env);
-	key_hook5(keycode, env);
+*/	key_hook5(keycode, env);
 	return (1);
 }
 
 int		key_hook5(int keycode, t_env *env)
 {
-	if (keycode == RIGHT)
+/*	if (keycode == RIGHT)
 	{
 		env->min_x += env->move;
 		env->max_x += env->move;
@@ -137,7 +137,7 @@ int		key_hook5(int keycode, t_env *env)
 		env->min_y -= env->move;
 		env->max_y -= env->move;
 	}
-	if (keycode == 53 || keycode == 12)
+*/	if (keycode == 53 || keycode == 12)
 		error_str("It's the end of wolf as we know it!", env, 2);
 	draw(env);
 	return (0);

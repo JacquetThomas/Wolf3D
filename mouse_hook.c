@@ -6,13 +6,13 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 11:12:45 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/08/31 13:42:42 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/02 11:49:48 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-int		mouse_hook(int button, int x, int y, t_env *env)
+/*int		mouse_hook(int button, int x, int y, t_env *env)
 {
 	t_plex			m;
 
@@ -45,7 +45,7 @@ int		mouse_move(int x, int y, t_env *env)
 			env->julia.i = -1;
 	}
 	return (1);
-}
+}*/
 
 int		exit_cross(t_env *env)
 {
@@ -55,7 +55,7 @@ int		exit_cross(t_env *env)
 	exit(0);
 	return (0);
 }
-
+/*
 void	zoom_in(t_plex m, t_env *env)
 {
 	if (env->auto_i)
@@ -76,4 +76,4 @@ void	zoom_out(t_plex m, t_env *env)
 	env->min_y = m.i - ((m.i - env->min_y) * 2);
 	env->max_x = m.r + ((env->max_x - m.r) * 2);
 	env->max_y = m.i + ((env->max_y - m.i) * 2);
-}
+}*/

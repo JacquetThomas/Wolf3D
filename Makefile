@@ -6,7 +6,7 @@
 #    By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/31 13:54:12 by cjacquet          #+#    #+#              #
-#    Updated: 2017/09/01 16:36:01 by cjacquet         ###   ########.fr        #
+#    Updated: 2017/09/02 13:15:43 by cjacquet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -22,10 +22,11 @@ SRCS		=	main.c \
 				parse.c \
 				init.c \
 				free_x.c \
-				help.c
-#				draaw.c \
-#				key_hook.c \
-#				mouse_hook.c
+				help.c \
+				draaw.c \
+				raycast.c \
+				key_hook.c \
+				mouse_hook.c
 #				update.c \
 #				color.c 
 OBJ			=	$(SRCS:.c=.o)

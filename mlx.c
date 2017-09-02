@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 15:52:37 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/01 16:42:55 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/02 17:24:18 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	line(t_point b, t_point c, t_env *env)
 {
 	int				a[6];
 
-	//env->color = set_color(env->map[env->i][env->j], env->black, env);
+	env->color = GREEN;//set_color(env->map[env->i][env->j], env->black, env);
 	a[0] = abs(c.x - b.x);
 	a[1] = abs(c.y - b.y);
 	a[4] = b.x < c.x ? 1 : -1;
@@ -41,8 +41,28 @@ void	line(t_point b, t_point c, t_env *env)
 	}
 }
 
+void	put_line(int x, t_env *env)
+{
+	t_point	b;
+	t_point	c;
+
+	b.x = x;
+	c.x = x;
+	b.y = env->wall_h.x;
+	c.y = env->wall_h.y;
+		line(b, c, env);
+	// basically it's gonna call line for the top to the begin of the wall
+	// and for begin wall to begin floor and finally for begin floor to
+	// bottom of the window
+	// line take a point b and a point c that stand for x,y of begin
+	// and x,y of end of the line to draw
+	// abracadabra
+}
+
 void	set_var(t_env *env)
 {
+	env->cam.dir = init_point(0, 1);
+	env->cam.plane = init_dpoint(0.0, 0.6);
 	env->cam.angle = 60.0;
 	env->cam.little_a = env->cam.angle / (double)W_WIDTH;
 	printf("%f\n", env->cam.little_a);
