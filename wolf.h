@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 13:36:33 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/02 17:03:41 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/03 13:48:41 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,12 +77,20 @@ typedef struct			s_cam
 {
 	t_dpoint			plane;
 	t_dpoint			realpos;
-	t_point				pos;
+	t_dpoint				pos;
 	t_point				dir;
+	double				speed;
 	double				angle;
+	double				rotspeed;
 	double				little_a;
 	double				dist_e;
 }						t_cam;
+
+typedef struct			s_bouss
+{
+	t_point				pos;
+	int					r;
+}						t_bouss;
 
 typedef struct			s_ray
 {
@@ -104,6 +112,7 @@ typedef struct			s_env
 	int					max_x;
 	t_cam				cam;
 	t_ray				ray;
+	t_bouss				cmpss;
 	t_point				wall_h;
 	int					side;
 	double				zoom;
@@ -153,8 +162,14 @@ void					dda(t_ray *ray, t_env *env);
 void					calc_dist(t_ray *ray, t_env *env);
 
 /*
+** Functions of minimap.c
+*/
+void					call_minimap(t_env *env);
+void					draw_cmpss(unsigned int color, t_env *env);
+/*
 ** Functions of tools.c
 */
+void					move_player(int nb, t_env *env);
 double					rad2deg(double angle);
 double					deg2rad(double angle);
 t_point					init_point(int x, int y);
@@ -183,6 +198,7 @@ int						count_nb(char *s);
 ** Functions of mlx.c
 */
 void					line(t_point b, t_point c, t_env *env);
+void					square(unsigned int color, int x, int y, t_env *env);
 void					put_line(int x, t_env *env);
 void					set_var(t_env *env);
 void					pixel_put_image(unsigned long img_color, int x, int y,
@@ -229,7 +245,7 @@ int						mouse_move(int x, int y, t_env *env);
 /*
 ** Functions of str_tools.c
 */
-t_point					search_player(char *map, t_env *env);
+t_dpoint					search_player(char *map, t_env *env);
 int						tab_len(char **tab);
 int						is_wolfmap(char *c);
 char					*read_file(int fd);

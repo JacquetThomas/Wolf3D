@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 15:52:37 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/02 17:24:18 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/03 13:49:43 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	line(t_point b, t_point c, t_env *env)
 {
 	int				a[6];
 
-	env->color = GREEN;//set_color(env->map[env->i][env->j], env->black, env);
+//	env->color = GREEN;//set_color(env->map[env->i][env->j], env->black, env);
 	a[0] = abs(c.x - b.x);
 	a[1] = abs(c.y - b.y);
 	a[4] = b.x < c.x ? 1 : -1;
@@ -24,7 +24,8 @@ void	line(t_point b, t_point c, t_env *env)
 	a[2] = (a[0] > a[1] ? a[0] : -a[1]) / 2;
 	while (1)
 	{
-		pixel_put_image(env->color, b.x, b.y, env);
+		pixel_b(env->color, b.x, b.y, env);
+	//	pixel_put_image(env->color, b.x, b.y, env);
 		if (b.x == c.x && b.y == c.y)
 			break ;
 		a[3] = a[2];
@@ -38,6 +39,25 @@ void	line(t_point b, t_point c, t_env *env)
 			a[2] += a[0];
 			b.y += a[5];
 		}
+	}
+}
+
+void	square(unsigned int color, int x, int y, t_env *env)
+{
+	int	i;
+	int	j;
+
+	i = y;
+	(void)env;
+	while (i < y + 10)
+	{
+		j = x;
+		while (j < x + 10)
+		{
+			pixel_b(color, j, i, env);
+			j++;
+		}
+		i++;
 	}
 }
 
@@ -61,12 +81,17 @@ void	put_line(int x, t_env *env)
 
 void	set_var(t_env *env)
 {
-	env->cam.dir = init_point(0, 1);
-	env->cam.plane = init_dpoint(0.0, 0.6);
-	env->cam.angle = 60.0;
-	env->cam.little_a = env->cam.angle / (double)W_WIDTH;
-	printf("%f\n", env->cam.little_a);
-	env->cam.dist_e = (double)(W_WIDTH / 2) / tan(deg2rad(env->cam.angle / 2));
+	env->cam.speed = 0.2;
+	env->cam.angle = 0;
+	env->cam.rotspeed = 0.2;
+	env->cmpss.pos.x = 150;
+	env->cmpss.pos.y = 50;
+	env->cmpss.r = 20;
+//	env->cam.dir = init_point(0, 1);
+//	env->cam.plane = init_dpoint(0.0, 0.6);
+//	env->cam.angle = 60.0;
+//	env->cam.little_a = env->cam.angle / (double)W_WIDTH;
+//	env->cam.dist_e = (double)(W_WIDTH / 2) / tan(deg2rad(env->cam.angle / 2));
 	env->music = 0;
 }
 

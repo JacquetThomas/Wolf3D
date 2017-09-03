@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/25 11:55:42 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/02 13:17:44 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/03 10:52:53 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,10 @@
 
 int		draw(t_env *env)
 {
-	call_raycast(env);
-	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
+//	call_raycast(env);
+	call_minimap(env);
+//	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
+	mlx_put_image_to_window(env->mlx, env->win, env->img_b, 0, 0);
 	print_info(env);
 //	if (env->help == 1)
 //		print_help(env);

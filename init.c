@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 15:31:30 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/02 14:09:10 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/03 12:06:00 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,16 +22,16 @@ void	init_mlx(t_env *env)
 		error_init(env, 2);
 	if (!(env->img = mlx_new_image(env->mlx, W_WIDTH, W_HEIGHT)))
 		error_init(env, 2);
-/*	if (!(env->img_b = mlx_new_image(env->mlx, W_WIDTH, 100)))
-		error_init(env, 2);*/
+	if (!(env->img_b = mlx_new_image(env->mlx, 200, 100)))
+		error_init(env, 2);
 	if (!(env->data = mlx_get_data_addr(env->img, &env->bpp,
 					&env->sizeline, &env->endian)))
 		error_init(env, 2);
-/*	if (!(env->data_b = mlx_get_data_addr(env->img_b, &env->bpp,
+	if (!(env->data_b = mlx_get_data_addr(env->img_b, &env->bpp,
 					&env->sizeline_b, &env->endian)))
 		error_init(env, 2);
-	make_it_b(env);
-	if (env->music)
+//	make_it_b(env);
+/*	if (env->music)
 		system("afplay wait.mp3 &");*/
 }
 
@@ -41,8 +41,7 @@ void	pixel_b(unsigned int img_color, int x, int y, t_env *env)
 	unsigned char	g;
 	unsigned char	b;
 
-	(void)img_color;
-	if (x > 0 && y > 0 && x < W_WIDTH && y < 100)
+	if (x >= 0 && y >= 0 && x < 200 && y < 100)
 	{
 		r = ((img_color & 0xFF0000) >> 16);
 		g = ((img_color & 0xFF00) >> 8);

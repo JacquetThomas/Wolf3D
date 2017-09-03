@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/25 12:46:41 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/02 11:46:45 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/03 12:55:09 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,27 +117,21 @@ int		key_hook4(int keycode, t_env *env)
 
 int		key_hook5(int keycode, t_env *env)
 {
-/*	if (keycode == RIGHT)
+	if (keycode == UP || keycode == DOWN ||keycode == RIGHT || keycode == LEFT)
 	{
-		env->min_x += env->move;
-		env->max_x += env->move;
+		printf("cam.angle : %f\n", env->cam.angle);
+		draw_cmpss(BLACK, env);
+		if (keycode == RIGHT)
+			env->cam.angle += env->cam.rotspeed;
+		if (keycode == LEFT)
+			env->cam.angle -= env->cam.rotspeed;
+		if (keycode == DOWN)
+			move_player(-1, env);
+		if (keycode == UP)
+			move_player(1, env);
+		draw_cmpss(RED, env);
 	}
-	if (keycode == LEFT)
-	{
-		env->min_x -= env->move;
-		env->max_x -= env->move;
-	}
-	if (keycode == DOWN)
-	{
-		env->min_y += env->move;
-		env->max_y += env->move;
-	}
-	if (keycode == UP)
-	{
-		env->min_y -= env->move;
-		env->max_y -= env->move;
-	}
-*/	if (keycode == 53 || keycode == 12)
+	if (keycode == 53 || keycode == 12)
 		error_str("It's the end of wolf as we know it!", env, 2);
 	draw(env);
 	return (0);

@@ -6,7 +6,7 @@
 #    By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/31 13:54:12 by cjacquet          #+#    #+#              #
-#    Updated: 2017/09/02 13:15:43 by cjacquet         ###   ########.fr        #
+#    Updated: 2017/09/03 10:56:51 by cjacquet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,6 +24,7 @@ SRCS		=	main.c \
 				free_x.c \
 				help.c \
 				draaw.c \
+				minimap.c \
 				raycast.c \
 				key_hook.c \
 				mouse_hook.c
