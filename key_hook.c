@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/25 12:46:41 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/03 12:55:09 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/04 16:31:34 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,19 +117,59 @@ int		key_hook4(int keycode, t_env *env)
 
 int		key_hook5(int keycode, t_env *env)
 {
+	t_dpoint		olddir;
+	t_dpoint		oldplane;
+
+	oldplane = env->ray.plane;
+	olddir = env->ray.dir;
 	if (keycode == UP || keycode == DOWN ||keycode == RIGHT || keycode == LEFT)
 	{
-		printf("cam.angle : %f\n", env->cam.angle);
+		printf("dir.x : %f // dir.y : %f\n", env->ray.dir.x, env->ray.dir.y);
 		draw_cmpss(BLACK, env);
-		if (keycode == RIGHT)
-			env->cam.angle += env->cam.rotspeed;
-		if (keycode == LEFT)
-			env->cam.angle -= env->cam.rotspeed;
-		if (keycode == DOWN)
-			move_player(-1, env);
+		square(BLACK, env->ray.pos.x * 10, env->ray.pos.y * 10, env);
+		env->map[(int)env->ray.pos.x][(int)env->ray.pos.y] = 0;
 		if (keycode == UP)
-			move_player(1, env);
+		{
+			if(env->map[(int)(env->ray.pos.x + env->ray.dir.x * env->movespeed)][(int)(env->ray.pos.y)] == 0)
+				env->ray.pos.x += env->ray.dir.x * env->movespeed;
+			if(env->map[(int)(env->ray.pos.x)][(int)(env->ray.pos.y
+						+ env->ray.dir.y * env->movespeed)] == 0)
+				env->ray.pos.y += env->ray.dir.y * env->movespeed;
+		}
+		//move backwards if no wall behind you
+		if (keycode == DOWN)
+		{
+			if(env->map[(int)(env->ray.pos.x - env->ray.dir.x * env->movespeed)][(int)(env->ray.pos.y)] == 0)
+				env->ray.pos.x -= env->ray.dir.x * env->movespeed;
+			if(env->map[(int)(env->ray.pos.x)][(int)(env->ray.pos.y - env->ray.dir.y * env->movespeed)] == 0)
+				env->ray.pos.y -= env->ray.dir.y * env->movespeed;
+		}
+		//rotate to the right
+		if (keycode == RIGHT)
+		{
+			//both camera direction and camera plane must be rotated
+			env->ray.dir.x = env->ray.dir.x * cos(-env->rotspeed) - env->ray.dir.y * sin(-env->rotspeed);
+			env->ray.dir.y = olddir.x * sin(-env->rotspeed) + env->ray.dir.y * cos(-env->rotspeed);
+			env->ray.plane.x = env->ray.plane.x * cos(-env->rotspeed) - env->ray.plane.y * sin(-env->rotspeed);
+			env->ray.plane.y = oldplane.x * sin(-env->rotspeed) + env->ray.plane.y * cos(- env->rotspeed);
+		}
+		//rotate to the left
+		if (keycode == LEFT)
+		{
+			//both camera direction and camera plane must be rotated
+			env->ray.dir.x = env->ray.dir.x * cos(env->rotspeed)
+				- env->ray.dir.y * sin(env->rotspeed);
+			env->ray.dir.y = olddir.x * sin(env->rotspeed)
+				+ env->ray.dir.y * cos(env->rotspeed);
+			env->ray.plane.x = env->ray.plane.x * cos(env->rotspeed)
+				- env->ray.plane.y * sin(env->rotspeed);
+			env->ray.plane.y = oldplane.x * sin(env->rotspeed)
+				+ env->ray.plane.y * cos(env->rotspeed);
+		}
+		env->map[(int)env->ray.pos.x][(int)env->ray.pos.y] = 2;
 		draw_cmpss(RED, env);
+		square(RED, env->ray.pos.x * 10, env->ray.pos.y * 10, env);
+		printf("--dir.x : %f // dir.y : %f\n", env->ray.dir.x, env->ray.dir.y);
 	}
 	if (keycode == 53 || keycode == 12)
 		error_str("It's the end of wolf as we know it!", env, 2);

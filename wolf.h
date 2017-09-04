@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 13:36:33 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/03 13:48:41 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/04 15:25:09 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,8 @@
 # define USAGE "Usage : ./wolf3d"
 # define BUFF_SIZE 1001
 
-/*
-** WALL_H 64 mean 64px of height for each "wall in real"
-*/
 # define W_HEIGHT 400
 # define W_WIDTH 640
-# define WALL_H 128
 
 /*
 ** Define colors
@@ -77,11 +73,9 @@ typedef struct			s_cam
 {
 	t_dpoint			plane;
 	t_dpoint			realpos;
-	t_dpoint				pos;
+	t_dpoint			pos;
 	t_point				dir;
-	double				speed;
 	double				angle;
-	double				rotspeed;
 	double				little_a;
 	double				dist_e;
 }						t_cam;
@@ -94,13 +88,17 @@ typedef struct			s_bouss
 
 typedef struct			s_ray
 {
-	double				wall_dist;
 	t_dpoint			pos;
 	t_dpoint			dir;
-	t_dpoint			side_dist;
-	t_dpoint			delta_dist;
+	t_dpoint			plane;
+	t_dpoint			raypos;
+	t_dpoint			raydir;
 	t_point				map;
+	t_dpoint			sidedist;
+	t_dpoint			deltadist;
+	double				perpwalldist;
 	t_point				step;
+	double				camerax;
 }						t_ray;
 
 typedef struct			s_env
@@ -108,6 +106,8 @@ typedef struct			s_env
 	char				*line;
 	char				**tab_file;
 	int					**map;
+	double				rotspeed;
+	double				movespeed;
 	int					max_y;
 	int					max_x;
 	t_cam				cam;
@@ -156,11 +156,11 @@ void					error_str(char *str, t_env *env, int mode);
 ** Functions of raycast.c
 */
 void					call_raycast(t_env *env);
-void					init_ray(int x, t_cam *cam, t_env *env);
+void					init_ray(int x, t_ray *ray);
 void					init_ray2(t_ray *ray);
 void					dda(t_ray *ray, t_env *env);
 void					calc_dist(t_ray *ray, t_env *env);
-
+void					color_wall(t_env *env);
 /*
 ** Functions of minimap.c
 */

@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 15:52:37 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/03 13:49:43 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/04 17:13:07 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,6 @@ void	line(t_point b, t_point c, t_env *env)
 {
 	int				a[6];
 
-//	env->color = GREEN;//set_color(env->map[env->i][env->j], env->black, env);
 	a[0] = abs(c.x - b.x);
 	a[1] = abs(c.y - b.y);
 	a[4] = b.x < c.x ? 1 : -1;
@@ -24,8 +23,7 @@ void	line(t_point b, t_point c, t_env *env)
 	a[2] = (a[0] > a[1] ? a[0] : -a[1]) / 2;
 	while (1)
 	{
-		pixel_b(env->color, b.x, b.y, env);
-	//	pixel_put_image(env->color, b.x, b.y, env);
+		pixel_put_image(env->color, b.x, b.y, env);
 		if (b.x == c.x && b.y == c.y)
 			break ;
 		a[3] = a[2];
@@ -63,35 +61,34 @@ void	square(unsigned int color, int x, int y, t_env *env)
 
 void	put_line(int x, t_env *env)
 {
-	t_point	b;
-	t_point	c;
+	int				y;
+	unsigned int	color;
 
-	b.x = x;
-	c.x = x;
-	b.y = env->wall_h.x;
-	c.y = env->wall_h.y;
-		line(b, c, env);
-	// basically it's gonna call line for the top to the begin of the wall
-	// and for begin wall to begin floor and finally for begin floor to
-	// bottom of the window
-	// line take a point b and a point c that stand for x,y of begin
-	// and x,y of end of the line to draw
-	// abracadabra
+	y = 0;
+	while (y < W_HEIGHT)
+	{
+		if (y >= 0 && y < env->wall_h.x)
+			color = BLACK;
+		else if (y >= env->wall_h.x && y <= env->wall_h.y)
+			color = env->color;
+		else
+			color = BROWN;
+		pixel_put_image(color, x, y, env);
+		y++;
+	}
 }
 
 void	set_var(t_env *env)
 {
-	env->cam.speed = 0.2;
-	env->cam.angle = 0;
-	env->cam.rotspeed = 0.2;
-	env->cmpss.pos.x = 150;
-	env->cmpss.pos.y = 50;
-	env->cmpss.r = 20;
-//	env->cam.dir = init_point(0, 1);
-//	env->cam.plane = init_dpoint(0.0, 0.6);
-//	env->cam.angle = 60.0;
-//	env->cam.little_a = env->cam.angle / (double)W_WIDTH;
-//	env->cam.dist_e = (double)(W_WIDTH / 2) / tan(deg2rad(env->cam.angle / 2));
+	env->cmpss.r = 12;
+	env->rotspeed = 0.1;
+	env->movespeed = 0.2;
+	env->ray.dir.x = -1;
+	env->ray.dir.y = 0;
+	env->ray.plane.x = 0;
+	env->ray.plane.y = 0.66;
+	env->ray.pos.x = env->cam.pos.x;
+	env->ray.pos.y = env->cam.pos.y;
 	env->music = 0;
 }
 

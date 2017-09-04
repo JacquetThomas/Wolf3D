@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 15:31:30 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/03 12:06:00 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/04 17:15:06 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ void	init_mlx(t_env *env)
 	set_var(env);
 	if (!(env->mlx = mlx_init()))
 		error_init(env, 1);
-	if (!(env->win = mlx_new_window(env->mlx, W_WIDTH, W_HEIGHT,
+	if (!(env->win = mlx_new_window(env->mlx, W_WIDTH, W_HEIGHT + 200,
 					"Wolf3D")))
 		error_init(env, 2);
 	if (!(env->img = mlx_new_image(env->mlx, W_WIDTH, W_HEIGHT)))
 		error_init(env, 2);
-	if (!(env->img_b = mlx_new_image(env->mlx, 200, 100)))
+	if (!(env->img_b = mlx_new_image(env->mlx, W_WIDTH, 200)))
 		error_init(env, 2);
 	if (!(env->data = mlx_get_data_addr(env->img, &env->bpp,
 					&env->sizeline, &env->endian)))
@@ -41,7 +41,7 @@ void	pixel_b(unsigned int img_color, int x, int y, t_env *env)
 	unsigned char	g;
 	unsigned char	b;
 
-	if (x >= 0 && y >= 0 && x < 200 && y < 100)
+	if (x >= 0 && y >= 0 && x < W_WIDTH && y < 200)
 	{
 		r = ((img_color & 0xFF0000) >> 16);
 		g = ((img_color & 0xFF00) >> 8);
@@ -61,7 +61,7 @@ void	make_it_b(t_env *env)
 	while (i < W_WIDTH)
 	{
 		j = 0;
-		while (j < 100)
+		while (j < 200)
 		{
 			pixel_b(BLACK, i, j, env);
 			j++;
