@@ -120,10 +120,11 @@ void		calc_dist(t_ray *ray, t_env *env)
 
 void		color_wall(t_env *env)
 {
+	printf("side : %d // step.x : %d // step.y : %d\n", env->side, env->ray.step.x, env->ray.step.y);
 	if (env->side == 0)
-		env->color = (env->ray.step.x == -1) ? RED : ORANGE;
+		env->color = (env->ray.step.x == -1) ? GREEN : BLUE;
 	else
-		env->color = (env->ray.step.y = 1) ? GREEN : BLUE;
-	if (env->side == 1)
-		env->color /= 2;
+		env->color = (env->ray.step.y == -1) ? ORANGE : RED;
+//	if (env->side == 1)
+//		env->color /= 2;
 }
