@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/02 11:59:12 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/04 17:03:32 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/09 15:34:36 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,13 +37,13 @@ void		init_ray(int x, t_ray *ray)
 	ray->raydir.y = ray->dir.y + ray->plane.y * ray->camerax;
 	ray->map.x = (int)ray->raypos.x;
 	ray->map.y = (int)ray->raypos.y;
+	ray->deltadist.x = sqrt(1 + (ray->raydir.y * ray->raydir.y)
+			/ (ray->raydir.x * ray->raydir.x));
 	init_ray2(ray);
 }
 
 void		init_ray2(t_ray *ray)
 {
-	ray->deltadist.x = sqrt(1 + (ray->raydir.y * ray->raydir.y)
-			/ (ray->raydir.x * ray->raydir.x));
 	ray->deltadist.y = sqrt(1 + (ray->raydir.x * ray->raydir.x)
 			/ (ray->raydir.y * ray->raydir.y));
 	if (ray->raydir.x < 0)
@@ -77,7 +77,6 @@ void		dda(t_ray *ray, t_env *env)
 	hit = 0;
 	while (hit == 0)
 	{
-		//jump to next map square, OR in x-direction, OR in y-direction
 		if (ray->sidedist.x < ray->sidedist.y)
 		{
 			ray->sidedist.x += ray->deltadist.x;
@@ -90,7 +89,6 @@ void		dda(t_ray *ray, t_env *env)
 			ray->map.y += ray->step.y;
 			env->side = 1;
 		}
-		//Check if ray has hit a wall
 		if (env->map[ray->map.x][ray->map.y] == 1)
 			hit = 1;
 	}
@@ -106,24 +104,11 @@ void		calc_dist(t_ray *ray, t_env *env)
 	else
 		ray->perpwalldist = (ray->map.y - ray->raypos.y
 				+ (1 - ray->step.y) / 2) / ray->raydir.y;
-
-	//Calculate height of line to draw on screen
 	lineheight = (int)(W_HEIGHT / ray->perpwalldist);
-	//calculate lowest and highest pixel to fill in current stripe
 	env->wall_h.x = -lineheight / 2 + W_HEIGHT / 2;
-	if(env->wall_h.x < 0)
+	if (env->wall_h.x < 0)
 		env->wall_h.x = 0;
 	env->wall_h.y = lineheight / 2 + W_HEIGHT / 2;
-	if(env->wall_h.y > W_HEIGHT)
+	if (env->wall_h.y > W_HEIGHT)
 		env->wall_h.y = W_HEIGHT - 1;
-}
-
-void		color_wall(t_env *env)
-{
-	if (env->side == 0)
-		env->color = (env->ray.step.x == -1) ? GREEN : BLUE;
-	else
-		env->color = (env->ray.step.y == -1) ? ORANGE : RED;
-//	if (env->side == 1)
-//		env->color /= 2;
 }

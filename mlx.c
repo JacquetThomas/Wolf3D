@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 15:52:37 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/04 17:13:07 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/09 15:37:58 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,6 @@ void	square(unsigned int color, int x, int y, t_env *env)
 	int	i;
 	int	j;
 
-	(void)env;
-//	printf("x : %d // y : %d\n", x, y);
-//	if (color == RED && x / 10 <= env->max_x && y / 10 <= env->max_y
-//			&& env->map[(int)(x / 10) + 1][(int)(y/10) + 1] == 1)
-//	{
-//		y = y - 10;
-//		x = x - 10;
-//	}
 	i = y;
 	while (i < y + 10)
 	{

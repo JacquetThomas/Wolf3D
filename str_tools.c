@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 10:56:05 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/04 15:27:55 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/09 15:37:37 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,8 +23,6 @@ t_dpoint		search_player(char *map, t_env *env)
 		iter.x = 0;
 		while (iter.x < env->max_x)
 		{
-//			printf("content[%d][%d] = %d\n", iter.y, iter.x,
-//					env->map[iter.y][iter.x]);
 			if (env->map[(int)iter.x][(int)iter.y] == 2)
 				return (iter);
 			iter.x++;
@@ -34,9 +32,9 @@ t_dpoint		search_player(char *map, t_env *env)
 	return (iter);
 }
 
-int			tab_len(char **tab)
+int				tab_len(char **tab)
 {
-	int		i;
+	int			i;
 
 	i = 0;
 	while (tab[i] != '\0')
@@ -44,12 +42,12 @@ int			tab_len(char **tab)
 	return (i);
 }
 
-int			is_white(char c)
+int				is_white(char c)
 {
 	return (c == ' ' || c == '\n' || c == '\t');
 }
 
-char		*read_file(int fd)
+char			*read_file(int fd)
 {
 	char	*buff;
 	char	*line;
@@ -72,7 +70,7 @@ char		*read_file(int fd)
 	return (line);
 }
 
-int			is_wolfmap(char *str)
+int				is_wolfmap(char *str)
 {
 	int		len;
 

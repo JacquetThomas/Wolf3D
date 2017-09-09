@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 13:36:33 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/04 15:25:09 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/09 15:35:09 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,12 +160,13 @@ void					init_ray(int x, t_ray *ray);
 void					init_ray2(t_ray *ray);
 void					dda(t_ray *ray, t_env *env);
 void					calc_dist(t_ray *ray, t_env *env);
-void					color_wall(t_env *env);
+
 /*
 ** Functions of minimap.c
 */
 void					call_minimap(t_env *env);
 void					draw_cmpss(unsigned int color, t_env *env);
+
 /*
 ** Functions of tools.c
 */
@@ -174,6 +175,10 @@ double					rad2deg(double angle);
 double					deg2rad(double angle);
 t_point					init_point(int x, int y);
 t_dpoint				init_dpoint(double x, double y);
+
+/*
+** Funcions of tools2.c
+*/
 int						test_line(char *s);
 int						is_num(char c);
 
@@ -212,11 +217,7 @@ void					zoom(int keycode, t_env *env);
 /*
 ** Functions of color.c
 */
-unsigned int			set_color(int hauteur1, int black, t_env *env);
-unsigned int			get_color(float h, float s, float l, t_env *env);
-void					init_hsl(t_hsl *calc, float h, float s, float l);
-void					calc_rgb(float l, t_hsl *calc, t_color *color);
-float					choose_rgb(float r, float g, float b, t_color *c);
+void					color_wall(t_env *env);
 
 /*
 ** Functions of draw.c
@@ -245,7 +246,7 @@ int						mouse_move(int x, int y, t_env *env);
 /*
 ** Functions of str_tools.c
 */
-t_dpoint					search_player(char *map, t_env *env);
+t_dpoint				search_player(char *map, t_env *env);
 int						tab_len(char **tab);
 int						is_wolfmap(char *c);
 char					*read_file(int fd);
