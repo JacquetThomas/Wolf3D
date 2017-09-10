@@ -6,7 +6,7 @@
 #    By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/31 13:54:12 by cjacquet          #+#    #+#              #
-#    Updated: 2017/09/09 15:39:53 by cjacquet         ###   ########.fr        #
+#    Updated: 2017/09/10 12:01:21 by cjacquet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -18,7 +18,6 @@ SRCS		=	main.c \
 				error.c \
 				str_tools.c \
 				tools.c \
-				tools2.c \
 				mlx.c \
 				parse.c \
 				init.c \
@@ -30,6 +29,7 @@ SRCS		=	main.c \
 				key_hook.c \
 				mouse_hook.c\
 				color.c
+#				tools2.c 
 OBJ			=	$(SRCS:.c=.o)
 NAME		=	wolf3d
 

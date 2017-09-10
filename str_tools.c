@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 10:56:05 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/09 15:37:37 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/10 15:03:06 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,10 @@ t_dpoint		search_player(char *map, t_env *env)
 		while (iter.x < env->max_x)
 		{
 			if (env->map[(int)iter.x][(int)iter.y] == 2)
+			{
+				iter.x += 0.02;
 				return (iter);
+			}
 			iter.x++;
 		}
 		iter.y++;

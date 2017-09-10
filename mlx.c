@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 15:52:37 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/09 15:37:58 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/10 16:47:20 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,9 +66,10 @@ void	put_line(int x, t_env *env)
 	y = 0;
 	while (y < W_HEIGHT)
 	{
-		if (y >= 0 && y < env->wall_h.x)
+		if (y >= 0 && y < env->wall_h.x + env->view)
 			color = BLACK;
-		else if (y >= env->wall_h.x && y <= env->wall_h.y)
+		else if (y >= env->wall_h.x + env->view
+				&& y <= env->wall_h.y + env->view)
 			color = env->color;
 		else
 			color = BROWN;
@@ -79,6 +80,7 @@ void	put_line(int x, t_env *env)
 
 void	set_var(t_env *env)
 {
+	env->view = 0;
 	env->cmpss.r = 12;
 	env->rotspeed = 0.1;
 	env->movespeed = 0.2;

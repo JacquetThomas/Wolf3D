@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 13:36:33 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/09 15:35:09 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/10 16:47:04 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,6 +48,10 @@
 # define DOWN 125
 # define LEFT 123
 # define RIGHT 124
+# define W 13
+# define A 0
+# define S 1
+# define D 2
 
 typedef struct			s_hsl
 {
@@ -133,6 +137,7 @@ typedef struct			s_env
 	int					sizeline_b;
 	int					endian;
 	unsigned int		color;
+	int					view;
 	int					music;
 }						t_env;
 
@@ -165,22 +170,17 @@ void					calc_dist(t_ray *ray, t_env *env);
 ** Functions of minimap.c
 */
 void					call_minimap(t_env *env);
-void					draw_cmpss(unsigned int color, t_env *env);
+void					draw_cmpss(unsigned int color, t_dpoint final,
+		t_env *env);
 
 /*
-** Functions of tools.c
-*/
-void					move_player(int nb, t_env *env);
-double					rad2deg(double angle);
-double					deg2rad(double angle);
-t_point					init_point(int x, int y);
-t_dpoint				init_dpoint(double x, double y);
-
-/*
-** Funcions of tools2.c
+** Funcions of tools.c
 */
 int						test_line(char *s);
 int						is_num(char c);
+double					deg2rad(double angle);
+t_point					init_point(int x, int y);
+t_dpoint				init_dpoint(double x, double y);
 
 /*
 ** Function of free_x.c
@@ -218,6 +218,8 @@ void					zoom(int keycode, t_env *env);
 ** Functions of color.c
 */
 void					color_wall(t_env *env);
+void					print_player(unsigned int color, t_env *env);
+int						moving_key(int key);
 
 /*
 ** Functions of draw.c
@@ -264,7 +266,5 @@ void					destroy_help(t_env *env);
 ** Functions of init
 */
 void					init_mlx(t_env *env);
-void					make_it_uni(t_env *env, unsigned int color);
-void					make_it_b(t_env *env);
 void					pixel_b(unsigned int color, int x, int y, t_env *env);
 #endif
