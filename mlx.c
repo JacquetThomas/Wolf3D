@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 15:52:37 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/10 16:47:20 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/11 17:56:08 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,11 @@ void	square(unsigned int color, int x, int y, t_env *env)
 		j = x;
 		while (j < x + 10)
 		{
-			pixel_b(color, j, i, env);
+			if (color != RED)
+				pixel_b(color, j, i, env);
+			else if (color == RED && j > x && j < x + 9 && i > y
+					&& i < y + 9)
+				pixel_b(color, j, i, env);
 			j++;
 		}
 		i++;
@@ -66,11 +70,10 @@ void	put_line(int x, t_env *env)
 	y = 0;
 	while (y < W_HEIGHT)
 	{
-		if (y >= 0 && y < env->wall_h.x + env->view)
+		if (y >= 0 && y < env->wall_h.x)
 			color = BLACK;
-		else if (y >= env->wall_h.x + env->view
-				&& y <= env->wall_h.y + env->view)
-			color = env->color;
+		else if (y >= env->wall_h.x && y <= env->wall_h.y)
+			color = mod_color(env->color, env);
 		else
 			color = BROWN;
 		pixel_put_image(color, x, y, env);
@@ -80,7 +83,6 @@ void	put_line(int x, t_env *env)
 
 void	set_var(t_env *env)
 {
-	env->view = 0;
 	env->cmpss.r = 12;
 	env->rotspeed = 0.1;
 	env->movespeed = 0.2;
@@ -90,7 +92,9 @@ void	set_var(t_env *env)
 	env->ray.plane.y = 0.66;
 	env->ray.pos.x = env->cam.pos.x;
 	env->ray.pos.y = env->cam.pos.y;
+	env->run = 0;
 	env->music = 0;
+	env->help = 0;
 }
 
 void	pixel_put_image(unsigned long img_color, int x, int y,

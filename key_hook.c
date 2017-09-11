@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/25 12:46:41 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/10 17:06:01 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/11 19:14:44 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,7 @@
 
 int		key_hook(int keycode, t_env *env)
 {
+	checking_time(env);
 	key_hook2(keycode, env);
 	return (1);
 }
@@ -32,15 +33,12 @@ int		key_hook3(int keycode, t_env *env)
 
 int		key_hook4(int keycode, t_env *env)
 {
-	if (keycode == UP)
+	if (keycode == 4)
 	{
-		printf("env->view = %d // W_HEIGHT / 2 : %d\n", env->view, W_HEIGHT / 2);
-		env->view = (env->view < W_HEIGHT / 2 - 4) ? env->view + 3 : env->view;
-	}
-	if (keycode == DOWN)
-	{
-		printf("-env->view = %d // W_HEIGHT / 2 : %d\n", env->view, W_HEIGHT / 2);
-		env->view = (env->view > -(W_HEIGHT / 2) - 4) ? env->view - 3 : env->view;
+		if (env->help)
+			destroy_help(env);
+		else
+			create_help(env);
 	}
 	key_hook5(keycode, env);
 	return (1);
@@ -55,33 +53,42 @@ int		key_hook5(int keycode, t_env *env)
 	olddir = env->ray.dir;
 	if (moving_key(keycode))
 	{
-//		printf("pos.x : %f // pos.y : %f\n", env->ray.pos.x, env->ray.pos.y);
-		printf("dir.x : %f // dir.y : %f\n", env->ray.dir.x, env->ray.dir.y);
 		print_player(BLACK, env);
 		env->map[(int)env->ray.pos.x][(int)env->ray.pos.y] = 0;
 		if (keycode == D)
 		{
-			env->ray.pos.x += (env->ray.dir.x - 0.5) * env->movespeed;
-			env->ray.pos.y += (env->ray.dir.y - 1) * env->movespeed;
+			if (check_grid((int)(env->ray.pos.x + env->ray.dir.y
+						* env->movespeed), (int)(env->ray.pos.y), env))
+			env->ray.pos.x += env->ray.dir.y * env->movespeed;
+			if (check_grid((int)(env->ray.pos.x), (int)(env->ray.pos.y
+						- env->ray.dir.x * env->movespeed), env))
+			env->ray.pos.y -= env->ray.dir.x * env->movespeed;
 		}
 		if (keycode == A)
 		{
-			env->ray.pos.x -= (env->ray.dir.x + 1) * env->movespeed;
-			env->ray.pos.y -= (env->ray.dir.y + 0.5) * env->movespeed;
+			if (check_grid((int)(env->ray.pos.x - env->ray.dir.y
+						* env->movespeed), (int)(env->ray.pos.y), env))
+			env->ray.pos.x -= env->ray.dir.y * env->movespeed;
+			if (check_grid((int)(env->ray.pos.x), (int)(env->ray.pos.y
+						+ env->ray.dir.x * env->movespeed), env))
+			env->ray.pos.y += env->ray.dir.x * env->movespeed;
 		}
-		if (keycode == W)
+		if (keycode == W || keycode == UP)
 		{
-			if(env->map[(int)(env->ray.pos.x + env->ray.dir.x * env->movespeed)][(int)(env->ray.pos.y)] == 0)
+			if (check_grid((int)(env->ray.pos.x + env->ray.dir.x
+							* env->movespeed), (int)(env->ray.pos.y), env))
 				env->ray.pos.x += env->ray.dir.x * env->movespeed;
-			if(env->map[(int)(env->ray.pos.x)][(int)(env->ray.pos.y
-						+ env->ray.dir.y * env->movespeed)] == 0)
+			if (check_grid((int)(env->ray.pos.x), (int)(env->ray.pos.y
+						+ env->ray.dir.y * env->movespeed), env))
 				env->ray.pos.y += env->ray.dir.y * env->movespeed;
 		}
-		if (keycode == S)
+		if (keycode == S || keycode == DOWN)
 		{
-			if(env->map[(int)(env->ray.pos.x - env->ray.dir.x * env->movespeed)][(int)(env->ray.pos.y)] == 0)
+			if (check_grid((int)(env->ray.pos.x - env->ray.dir.x
+							* env->movespeed), (int)(env->ray.pos.y), env))
 				env->ray.pos.x -= env->ray.dir.x * env->movespeed;
-			if(env->map[(int)(env->ray.pos.x)][(int)(env->ray.pos.y - env->ray.dir.y * env->movespeed)] == 0)
+			if (check_grid((int)(env->ray.pos.x), (int)(env->ray.pos.y
+					- env->ray.dir.y * env->movespeed), env))
 				env->ray.pos.y -= env->ray.dir.y * env->movespeed;
 		}
 		if (keycode == RIGHT)
@@ -102,9 +109,10 @@ int		key_hook5(int keycode, t_env *env)
 			env->ray.plane.y = oldplane.x * sin(env->rotspeed)
 				+ env->ray.plane.y * cos(env->rotspeed);
 		}
-		env->map[(int)env->ray.pos.x][(int)env->ray.pos.y] = 2;
-//		print_player(RED, env);
-//		printf("--dir.x : %f // dir.y : %f\n", env->ray.dir.x, env->ray.dir.y);
+		if (env->maze && env->map[(int)env->ray.pos.x][(int)env->ray.pos.y] == 5)
+			call_winner(env);
+		else
+			env->map[(int)env->ray.pos.x][(int)env->ray.pos.y] = 2;
 	}
 	if (keycode == 53 || keycode == 12)
 		error_str("It's the end of wolf as we know it!", env, 2);

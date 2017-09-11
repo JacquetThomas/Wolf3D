@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 13:36:33 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/10 16:47:04 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/11 19:21:39 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,13 +15,15 @@
 
 # include "libft/libft.h"
 # include "minilibx/mlx.h"
+# include "get_next_line.h"
 # include <fcntl.h>
 # include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <math.h>
+# include <time.h>
 # define USAGE "Usage : ./wolf3d"
-# define BUFF_SIZE 1001
+//# define BUFF_SIZE 1001
 
 # define W_HEIGHT 400
 # define W_WIDTH 640
@@ -31,10 +33,14 @@
 */
 # define WHITE 0xFFFFFF
 # define RED 0xFF0000
+# define DRED 0x8B0000
 # define ORANGE 0xED7F10
+# define DORANGE 0xD2691E
 # define YELLOW 0xFFFF00
 # define GREEN 0x00FF00
+# define DGREEN 0x008B00
 # define BLUE 0x0000FF
+# define DBLUE 0x00008B
 # define PURPLE 0xA020F0
 # define BROWN 0x582900
 # define BLACK 0x000000
@@ -75,13 +81,7 @@ typedef struct			s_point
 
 typedef struct			s_cam
 {
-	t_dpoint			plane;
-	t_dpoint			realpos;
 	t_dpoint			pos;
-	t_point				dir;
-	double				angle;
-	double				little_a;
-	double				dist_e;
 }						t_cam;
 
 typedef struct			s_bouss
@@ -107,6 +107,10 @@ typedef struct			s_ray
 
 typedef struct			s_env
 {
+	time_t				start;
+	time_t				now;
+	int					run;
+	int					maze;
 	char				*line;
 	char				**tab_file;
 	int					**map;
@@ -137,7 +141,6 @@ typedef struct			s_env
 	int					sizeline_b;
 	int					endian;
 	unsigned int		color;
-	int					view;
 	int					music;
 }						t_env;
 
@@ -219,6 +222,8 @@ void					zoom(int keycode, t_env *env);
 */
 void					color_wall(t_env *env);
 void					print_player(unsigned int color, t_env *env);
+unsigned int			mod_color(unsigned int color, t_env *env);
+unsigned int			dcolor(unsigned int color);
 int						moving_key(int key);
 
 /*
@@ -251,7 +256,7 @@ int						mouse_move(int x, int y, t_env *env);
 t_dpoint				search_player(char *map, t_env *env);
 int						tab_len(char **tab);
 int						is_wolfmap(char *c);
-char					*read_file(int fd);
+char					*readfile(int fd);
 int						is_white(char c);
 
 /*
@@ -267,4 +272,20 @@ void					destroy_help(t_env *env);
 */
 void					init_mlx(t_env *env);
 void					pixel_b(unsigned int color, int x, int y, t_env *env);
+
+/*
+** Function of move.c
+*/
+void					move_up(t_env *env);
+void					move_down(t_env *env);
+void					move_left(t_env *env);
+void					move_right(t_env *env);
+
+/*
+** Functions of game.c
+*/
+void					checking_time(t_env *env);
+void					call_winner(t_env *env);
+void					call_loser(t_env *env);
+int						check_grid(int x, int y, t_env *env);
 #endif

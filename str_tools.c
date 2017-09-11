@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 10:56:05 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/10 15:03:06 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/11 17:03:36 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,7 @@ t_dpoint		search_player(char *map, t_env *env)
 			if (env->map[(int)iter.x][(int)iter.y] == 2)
 			{
 				iter.x += 0.02;
+				iter.y += 0.02;
 				return (iter);
 			}
 			iter.x++;
@@ -50,7 +51,7 @@ int				is_white(char c)
 	return (c == ' ' || c == '\n' || c == '\t');
 }
 
-char			*read_file(int fd)
+char			*readfile(int fd)
 {
 	char	*buff;
 	char	*line;

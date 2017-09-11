@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/03 10:53:01 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/10 14:57:12 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/11 17:19:11 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,20 +17,19 @@ void		call_minimap(t_env *env)
 	t_point	it;
 
 	it.x = 0;
-	while (it.x < env->max_x)
+	if (env->maze == 0)
 	{
-		it.y = 0;
-		while (it.y < env->max_y)
+		while (it.x < env->max_x)
 		{
-			if (env->map[it.x][it.y] == 1)
-				square(YELLOW, it.y * 10, it.x * 10, env);
-			else if (env->map[it.x][it.y] == 2)
-				square(RED, env->ray.pos.y * 10, env->ray.pos.x * 10, env);
-//			else
-//				square(BLACK, it.y * 10, it.x * 10, env);
-			it.y++;
+			it.y = 0;
+			while (it.y < env->max_y)
+			{
+				if (env->map[it.x][it.y] == 1)
+					square(YELLOW, it.y * 10, it.x * 10, env);
+				it.y++;
+			}
+			it.x++;
 		}
-		it.x++;
 	}
 }
 
@@ -71,7 +70,6 @@ void		draw_cmpss(unsigned int color, t_dpoint final, t_env *env)
 	angle = (atan2((env->ray.plane.y - env->ray.dir.y),
 				(env->ray.plane.x - env->ray.dir.x)) + M_PI) * 180 / M_PI;
 	env->color = color;
-	printf("*final.x = %f // ray.pos.y = %f\n", final.x, final.y);
 	rel.x = final.x * 10 + 5;
 	rel.y = final.y * 10 + 5;
 	end.x = rel.x + cos(deg2rad(angle - 38)) * env->cmpss.r;

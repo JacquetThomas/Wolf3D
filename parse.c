@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 13:32:31 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/01 16:44:27 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/11 17:03:45 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ void			get_map(char *file, t_env *env)
 	int		fd;
 
 	if ((fd = open(file, O_RDONLY)) > 0)
-		env->line = read_file(fd);
+		env->line = readfile(fd);
 	else
 		error_str("Map doesn't exist dude.", env, 0);
 	env->tab_file = ft_strsplit(env->line, '\n');

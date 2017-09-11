@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 13:58:16 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/02 11:51:25 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/11 18:58:01 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,25 @@ void	error_init(t_env *env, int mode)
 
 void	error_str(char *str, t_env *env, int mode)
 {
+	char	*ito;
+
 	ft_putendl(str);
-	if (mode == 2)
+	if (mode >= 2)
 		free_all(env);
 	else if (mode == 1)
 		free_no_win(env);
 	if (env->music == 1)
 		system("killall afplay");
+	if (mode == 4)
+		sleep(10);
+	if (mode == 5)
+	{
+		ito = ft_itoa(env->now - env->start);
+		ft_putstr("You win in ");
+		ft_putstr(ito);
+		ft_putendl(" sec!");
+		free(ito);
+		sleep(10);
+	}
 	exit(0);
 }

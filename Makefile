@@ -6,7 +6,7 @@
 #    By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/31 13:54:12 by cjacquet          #+#    #+#              #
-#    Updated: 2017/09/10 12:01:21 by cjacquet         ###   ########.fr        #
+#    Updated: 2017/09/11 19:30:54 by cjacquet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,6 +15,8 @@ CFLAGS		=	-Wextra -Wall -Werror -O3
 INCL		=	wolf.h
 LIB_FLAG	=	-Ilibft/ libft/libft.a
 SRCS		=	main.c \
+				game.c \
+				move.c \
 				error.c \
 				str_tools.c \
 				tools.c \
@@ -28,6 +30,7 @@ SRCS		=	main.c \
 				raycast.c \
 				key_hook.c \
 				mouse_hook.c\
+				get_next_line.c \
 				color.c
 #				tools2.c 
 OBJ			=	$(SRCS:.c=.o)
@@ -35,10 +38,12 @@ NAME		=	wolf3d
 
 all : $(NAME)
 
-$(NAME) :
+$(NAME) : $(OBJ)
 	make -C libft/
-	gcc $(CFLAGS) -c $(SRCS) -include $(INCL)
 	gcc $(CFLAGS) $(OBJ) $(MLX_FLAG) $(LIB_FLAG) -o $(NAME)
+
+%.o : %.c
+	gcc $(CFLAGS) -c $< -o $@ -include $(INCL)
 
 clean :
 	make -C libft/ clean

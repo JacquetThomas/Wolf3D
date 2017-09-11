@@ -6,13 +6,13 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 15:52:37 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/10 15:49:23 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/11 17:08:55 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "wolf.h"
 
-void		color_wall(t_env *env)
+void			color_wall(t_env *env)
 {
 	if (env->side == 0)
 		env->color = (env->ray.step.x == -1) ? GREEN : BLUE;
@@ -20,18 +20,51 @@ void		color_wall(t_env *env)
 		env->color = (env->ray.step.y == -1) ? ORANGE : RED;
 }
 
-void		print_player(unsigned int color, t_env *env)
+unsigned int	mod_color(unsigned int color, t_env *env)
+{
+	if (env->maze == 1)
+		return (BLACK);
+	else
+		return (color);
+}
+
+unsigned int	dcolor(unsigned int color)
+{
+	if (color == RED)
+		return (DRED);
+	if (color == ORANGE)
+		return (DORANGE);
+	if (color == BLUE)
+		return (DBLUE);
+	if (color == GREEN)
+		return (DGREEN);
+	return (BLACK);
+}
+
+void			print_player(unsigned int color, t_env *env)
 {
 	t_dpoint	final;
-
+	t_dpoint	z;
 	final.x = env->ray.pos.x;
 	final.y = env->ray.pos.y;
+
+	z.x = env->ray.pos.x - floor(env->ray.pos.x);
+	z.y = env->ray.pos.y - floor(env->ray.pos.y);
 	if ((int)(env->ray.pos.x + 1) < env->max_x
-			&& env->map[(int)env->ray.pos.x + 1][(int)env->ray.pos.y] == 1)
-		final.x = env->ray.pos.x - (env->ray.pos.x - (int)env->ray.pos.x);
+			&& env->map[(int)(env->ray.pos.x) + 1][(int)env->ray.pos.y] == 1)
+		final.x = floor(env->ray.pos.x);
 	if ((int)(env->ray.pos.y + 1) < env->max_y
-			&& env->map[(int)final.x][(int)env->ray.pos.y + 1] == 1)
-		final.y = env->ray.pos.y - (env->ray.pos.y - (int)env->ray.pos.y);
+			&& env->map[(int)final.x][(int)(env->ray.pos.y) + 1] == 1)
+		final.y = floor(env->ray.pos.y);
+	if (z.x >= 0.6 && z.y >= 0.6)
+	{
+		if ((int)(env->ray.pos.x + 1) < env->max_x && (int)env->ray.pos.y + 1 < env->max_y
+				&& env->map[(int)(env->ray.pos.x) + 1][(int)env->ray.pos.y + 1] == 1)
+			{
+				final.x = floor(env->ray.pos.x);
+				final.y = floor(env->ray.pos.y);
+			}
+	}
 	draw_cmpss(color, final, env);
 	square(color, final.y * 10, final.x * 10, env);
 }

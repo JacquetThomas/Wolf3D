@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/25 11:55:42 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/10 15:01:59 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/11 17:48:49 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,8 +20,8 @@ int		draw(t_env *env)
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 	mlx_put_image_to_window(env->mlx, env->win, env->img_b, 0, W_HEIGHT);
 	print_info(env);
-//	if (env->help == 1)
-//		print_help(env);
+	if (env->help == 1)
+		print_help(env);
 	return (1);
 }
 
@@ -51,19 +51,19 @@ void	print_info(t_env *env)
 //	ito = ft_itoa(env->max_i);
 //	mlx_string_put(env->mlx, env->win, 120, 40, 0x00FF0000, ito);
 //	free(ito);
-//	print_info2(env);
+	print_info2(env);
 }
 
-/*void	print_info2(t_env *env)
+void	print_info2(t_env *env)
 {
-	char	*ito;
+//	char	*ito;
 
-	mlx_string_put(env->mlx, env->win, 2, 40, 0x00FF0000, "Iterations:");
-	ito = (env->auto_i) ? "auto" : "manual";
-	mlx_string_put(env->mlx, env->win, 160, 40, 0x00FF0000, ito);
+//	mlx_string_put(env->mlx, env->win, 2, 40, 0x00FF0000, "Iterations:");
+//	ito = (env->auto_i) ? "auto" : "manual";
+//	mlx_string_put(env->mlx, env->win, 160, 40, 0x00FF0000, ito);
 	mlx_string_put(env->mlx, env->win, 2, 0, 0x00FF0000, "Music:");
 	if (env->music)
 		mlx_string_put(env->mlx, env->win, 67, 0, 0x00FF0000, "ON");
 	else
 		mlx_string_put(env->mlx, env->win, 67, 0, 0x00FF0000, "OFF");
-}*/
+}

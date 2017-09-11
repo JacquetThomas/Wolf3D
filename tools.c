@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/01 14:55:33 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/10 12:22:41 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/11 19:02:19 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ int			test_line(char *str)
 
 int			is_num(char c)
 {
-	return (c == '0' || c == '1' || c == '2' || c == '4');
+	return (c == '0' || c == '1' || c == '2' || c == '5');
 }
 
 double		deg2rad(double angle)
