@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 13:58:16 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/11 18:58:01 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/12 20:14:26 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,12 @@ void	error_str(char *str, t_env *env, int mode)
 	char	*ito;
 
 	ft_putendl(str);
+	if (env->music == 1)
+		system("killall afplay");
 	if (mode >= 2)
 		free_all(env);
 	else if (mode == 1)
 		free_no_win(env);
-	if (env->music == 1)
-		system("killall afplay");
-	if (mode == 4)
-		sleep(10);
 	if (mode == 5)
 	{
 		ito = ft_itoa(env->now - env->start);
@@ -37,7 +35,6 @@ void	error_str(char *str, t_env *env, int mode)
 		ft_putstr(ito);
 		ft_putendl(" sec!");
 		free(ito);
-		sleep(10);
 	}
 	exit(0);
 }

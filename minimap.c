@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/03 10:53:01 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/11 17:19:11 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/12 18:26:30 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,19 +17,21 @@ void		call_minimap(t_env *env)
 	t_point	it;
 
 	it.x = 0;
-	if (env->maze == 0)
+	while (it.x < env->max_x)
 	{
-		while (it.x < env->max_x)
+		it.y = 0;
+		while (it.y < env->max_y)
 		{
-			it.y = 0;
-			while (it.y < env->max_y)
+			if (env->map[it.x][it.y] == 1)
 			{
-				if (env->map[it.x][it.y] == 1)
+				if (env->maze)
+					square(BLACK, it.y * 10, it.x * 10, env);
+				else
 					square(YELLOW, it.y * 10, it.x * 10, env);
-				it.y++;
 			}
-			it.x++;
+			it.y++;
 		}
+		it.x++;
 	}
 }
 

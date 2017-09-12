@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/01 14:55:33 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/11 19:02:19 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/12 15:59:48 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,7 @@ int			is_num(char c)
 
 double		deg2rad(double angle)
 {
-  	return (M_PI * (angle) / 180);
+	return (M_PI * (angle) / 180);
 }
 
 t_point		init_point(int x, int y)

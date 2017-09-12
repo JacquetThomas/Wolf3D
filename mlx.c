@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 15:52:37 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/11 17:56:08 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/12 19:33:09 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,8 +92,8 @@ void	set_var(t_env *env)
 	env->ray.plane.y = 0.66;
 	env->ray.pos.x = env->cam.pos.x;
 	env->ray.pos.y = env->cam.pos.y;
-	env->run = 0;
-	env->music = 0;
+	env->run = 1;
+	env->music = 1;
 	env->help = 0;
 }
 

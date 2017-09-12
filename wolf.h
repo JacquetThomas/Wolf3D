@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 13:36:33 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/11 19:21:39 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/12 21:00:57 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,30 +17,25 @@
 # include "minilibx/mlx.h"
 # include "get_next_line.h"
 # include <fcntl.h>
-# include <stdio.h>
 # include <stdlib.h>
 # include <unistd.h>
 # include <math.h>
 # include <time.h>
 # define USAGE "Usage : ./wolf3d"
-//# define BUFF_SIZE 1001
 
 # define W_HEIGHT 400
 # define W_WIDTH 640
+# define M_TIME 180
 
 /*
 ** Define colors
 */
 # define WHITE 0xFFFFFF
 # define RED 0xFF0000
-# define DRED 0x8B0000
 # define ORANGE 0xED7F10
-# define DORANGE 0xD2691E
 # define YELLOW 0xFFFF00
 # define GREEN 0x00FF00
-# define DGREEN 0x008B00
 # define BLUE 0x0000FF
-# define DBLUE 0x00008B
 # define PURPLE 0xA020F0
 # define BROWN 0x582900
 # define BLACK 0x000000
@@ -123,9 +118,7 @@ typedef struct			s_env
 	t_bouss				cmpss;
 	t_point				wall_h;
 	int					side;
-	double				zoom;
 	int					help;
-	int					nvar;
 	double				move;
 	void				*mlx;
 	void				*win;
@@ -241,14 +234,13 @@ int						key_hook(int keycode, t_env *env);
 int						key_hook2(int keycode, t_env *env);
 int						key_hook3(int keycode, t_env *env);
 int						key_hook4(int keycode, t_env *env);
-int						key_hook5(int keycode, t_env *env);
+int						exit_cross(t_env *env);
 
 /*
-** Functions of mouse_hook.c
+** Functions of key_hook2.c
 */
-int						exit_cross(t_env *env);
-int						mouse_hook(int button, int x, int y, t_env *env);
-int						mouse_move(int x, int y, t_env *env);
+int						keypress(int keycode, t_env *env);
+int						keyrelease(int keycode, t_env *env);
 
 /*
 ** Functions of str_tools.c
@@ -266,6 +258,7 @@ void					print_help(t_env *env);
 void					print_help2(int d, int h, t_env *env);
 void					create_help(t_env *env);
 void					destroy_help(t_env *env);
+int						check_map(t_env *env);
 
 /*
 ** Functions of init
@@ -274,7 +267,7 @@ void					init_mlx(t_env *env);
 void					pixel_b(unsigned int color, int x, int y, t_env *env);
 
 /*
-** Function of move.c
+** Functions of move.c
 */
 void					move_up(t_env *env);
 void					move_down(t_env *env);
@@ -282,10 +275,16 @@ void					move_left(t_env *env);
 void					move_right(t_env *env);
 
 /*
+** Functions of rotate.c
+*/
+void					rotate(int keycode, t_env *env);
+
+/*
 ** Functions of game.c
 */
 void					checking_time(t_env *env);
 void					call_winner(t_env *env);
 void					call_loser(t_env *env);
+void					countdown(void);
 int						check_grid(int x, int y, t_env *env);
 #endif

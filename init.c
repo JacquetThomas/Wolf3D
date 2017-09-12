@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 15:31:30 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/09 15:43:41 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/12 18:05:46 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,8 +30,10 @@ void	init_mlx(t_env *env)
 	if (!(env->data_b = mlx_get_data_addr(env->img_b, &env->bpp,
 					&env->sizeline_b, &env->endian)))
 		error_init(env, 2);
-	if (env->music)
-		system("afplay wait.mp3 &");
+	if (env->music && env->maze)
+		system("afplay Ressources/stress.mp3 &");
+	if (env->music && !env->maze)
+		system("afplay Ressources/wait.mp3 &");
 }
 
 void	pixel_b(unsigned int img_color, int x, int y, t_env *env)

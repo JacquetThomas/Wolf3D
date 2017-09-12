@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/25 11:55:42 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/11 17:48:49 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/12 20:10:53 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,8 @@
 int		draw(t_env *env)
 {
 	call_raycast(env);
-	call_minimap(env);
+	if (!env->maze)
+		call_minimap(env);
 	print_player(RED, env);
 	mlx_put_image_to_window(env->mlx, env->win, env->img, 0, 0);
 	mlx_put_image_to_window(env->mlx, env->win, env->img_b, 0, W_HEIGHT);
@@ -27,43 +28,23 @@ int		draw(t_env *env)
 
 void	print_info(t_env *env)
 {
-//	char *ito;
+	char	*ito;
+	time_t	diff;
 
-	mlx_string_put(env->mlx, env->win, W_WIDTH - 85, 0, 0x00FF0000, "(h)elp ?");
-//	if (env->fract_name == 1)
-//	{
-//		ito = (env->c_lock) ? "Yes" : "No";
-//		mlx_string_put(env->mlx, env->win, 2, 60, 0x00FF0000,
-//				"Const. lock:");
-//		mlx_string_put(env->mlx, env->win, 122, 60, 0x00FF0000, ito);
-//		ito = (env->move_r) ? "Yes" : "No";
-//		mlx_string_put(env->mlx, env->win, 2, 80, 0x00FF0000,
-//				"move XY :");
-//		mlx_string_put(env->mlx, env->win, 102, 80, 0x00FF0000, ito);
-//		ito = (env->move_i) ? "Yes" : "No";
-//		mlx_string_put(env->mlx, env->win, 132, 80, 0x00FF0000, ito);
-//	}
-//	mlx_string_put(env->mlx, env->win, 2, 20, 0x00FF0000, "Psyche:");
-//	ito = (env->color_picker) ? "Oh Yeah man" : "Nop";
-//	mlx_string_put(env->mlx, env->win, 75, 20, 0x00FF0000, ito);
-//	mlx_string_put(env->mlx, env->win, W_WIDTH / 3, 0, 0x00FFFFFF,
-//			fract_name(env));
-//	ito = ft_itoa(env->max_i);
-//	mlx_string_put(env->mlx, env->win, 120, 40, 0x00FF0000, ito);
-//	free(ito);
-	print_info2(env);
-}
-
-void	print_info2(t_env *env)
-{
-//	char	*ito;
-
-//	mlx_string_put(env->mlx, env->win, 2, 40, 0x00FF0000, "Iterations:");
-//	ito = (env->auto_i) ? "auto" : "manual";
-//	mlx_string_put(env->mlx, env->win, 160, 40, 0x00FF0000, ito);
-	mlx_string_put(env->mlx, env->win, 2, 0, 0x00FF0000, "Music:");
+	mlx_string_put(env->mlx, env->win, W_WIDTH - 85, 0, WHITE, "(h)elp ?");
+	mlx_string_put(env->mlx, env->win, 2, 0, WHITE, "Music:");
 	if (env->music)
-		mlx_string_put(env->mlx, env->win, 67, 0, 0x00FF0000, "ON");
+		mlx_string_put(env->mlx, env->win, 67, 0, WHITE, "ON");
 	else
-		mlx_string_put(env->mlx, env->win, 67, 0, 0x00FF0000, "OFF");
+		mlx_string_put(env->mlx, env->win, 67, 0, WHITE, "OFF");
+	if (env->maze)
+	{
+		checking_time(env);
+		diff = M_TIME - (env->now - env->start);
+		ito = ft_itoa(diff);
+		mlx_string_put(env->mlx, env->win, W_WIDTH / 3, 0, RED,
+				"Remaining time: ");
+		mlx_string_put(env->mlx, env->win, W_WIDTH / 3 + 150, 0, RED, ito);
+		free(ito);
+	}
 }

@@ -6,7 +6,7 @@
 #    By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2017/08/31 13:54:12 by cjacquet          #+#    #+#              #
-#    Updated: 2017/09/11 19:30:54 by cjacquet         ###   ########.fr        #
+#    Updated: 2017/09/12 20:06:19 by cjacquet         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -17,6 +17,7 @@ LIB_FLAG	=	-Ilibft/ libft/libft.a
 SRCS		=	main.c \
 				game.c \
 				move.c \
+				rotate.c \
 				error.c \
 				str_tools.c \
 				tools.c \
@@ -29,10 +30,8 @@ SRCS		=	main.c \
 				minimap.c \
 				raycast.c \
 				key_hook.c \
-				mouse_hook.c\
 				get_next_line.c \
 				color.c
-#				tools2.c 
 OBJ			=	$(SRCS:.c=.o)
 NAME		=	wolf3d
 

@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/20 13:32:31 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/11 17:03:45 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/12 20:56:03 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,6 +26,8 @@ void			get_map(char *file, t_env *env)
 		set_map(env, env->tab_file);
 	else
 		error_str("Wrong map_file", env, 1);
+	if (!(fd = check_map(env)))
+		error_str("Wrong map_file, no continuous extern walls", env, 1);
 }
 
 void			set_map(t_env *env, char **tab_file)
@@ -78,7 +80,6 @@ int				check_nb(char **s)
 	base = 0;
 	while (s[j])
 	{
-		printf("s[%d] = %s\n", j, s[j]);
 		tmp = count_nb(s[j]);
 		if (j == 0)
 			base = tmp;

@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 13:47:56 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/11 19:30:23 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/12 20:57:42 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@ void	ask_mode(t_env *env)
 			if (env->maze)
 			{
 				ft_putendl("You got 3min to get out of this maze, good luck.");
-				sleep(10);
+				countdown();
 				env->start = time(NULL);
 			}
 			return ;
@@ -57,19 +57,19 @@ void	ask_mode(t_env *env)
 int		main(int ac, char **av)
 {
 	t_env	env;
+	char	*map;
 
-	if (ac == 2 && is_wolfmap(av[1]))
+	(void)av;
+	map = "Ressources/map.wolf";
+	if (ac == 1 && is_wolfmap(map))
 	{
-		ft_putendl("ta");
-		env.cam.pos = search_player(av[1], &env);
+		env.cam.pos = search_player(map, &env);
 		ask_mode(&env);
 		init_mlx(&env);
 		draw(&env);
 		mlx_hook(env.win, 17, (1L << 17), exit_cross, &env);
 		mlx_hook(env.win, 2, 0, key_hook, &env);
-//		mlx_hook(env.win, 6, (1L << 6), mouse_move, &env);
-//		mlx_mouse_hook(env.win, mouse_hook, &env);
-//		mlx_loop_hook(env.mlx, draw, &env);
+		mlx_loop_hook(env.mlx, draw, &env);
 		mlx_loop(env.mlx);
 	}
 	else
