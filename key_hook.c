@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/25 12:46:41 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/12 20:07:28 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/12 21:52:56 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -117,8 +117,6 @@ int		key_hook4(int keycode, t_env *env)
 
 int		exit_cross(t_env *env)
 {
-	if (env->music)
-		system("killall afplay");
 	if (env->maze)
 		error_str("Give up is for the loser!", env, 2);
 	else

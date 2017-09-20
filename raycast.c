@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/09/02 11:59:12 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/09 15:34:36 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/12 21:14:15 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,6 +91,8 @@ void		dda(t_ray *ray, t_env *env)
 		}
 		if (env->map[ray->map.x][ray->map.y] == 1)
 			hit = 1;
+		if (env->map[ray->map.x][ray->map.y] == 5)
+			env->exit = 1;
 	}
 }
 

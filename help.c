@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/08/20 13:46:58 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/12 20:55:44 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/12 21:37:35 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,12 +75,12 @@ int		check_map(t_env *env)
 						|| y == env->max_y - 1) && env->map[x][y] != 1)
 				return (0);
 			if (env->map[x][y] == 2)
-				player = 1;
+				player += 1;
 			y++;
 		}
 		x++;
 	}
-	if (player == 0)
-		error_str("Wrong map_file, no player set", env, 1);
+	if (player != 1)
+		error_str("Wrong map_file, no or too much player(s) set", env, 1);
 	return (player);
 }

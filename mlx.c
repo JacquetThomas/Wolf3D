@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 15:52:37 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/12 19:33:09 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/12 21:45:17 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,13 @@ void	put_line(int x, t_env *env)
 		if (y >= 0 && y < env->wall_h.x)
 			color = BLACK;
 		else if (y >= env->wall_h.x && y <= env->wall_h.y)
-			color = mod_color(env->color, env);
+			color = mod_color(env->color, y, env);
 		else
 			color = BROWN;
 		pixel_put_image(color, x, y, env);
 		y++;
 	}
+	env->exit = 0;
 }
 
 void	set_var(t_env *env)

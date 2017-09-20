@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/27 15:52:37 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/12 16:54:20 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/12 21:40:21 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,10 +20,14 @@ void			color_wall(t_env *env)
 		env->color = (env->ray.step.y == -1) ? ORANGE : RED;
 }
 
-unsigned int	mod_color(unsigned int color, t_env *env)
+unsigned int	mod_color(unsigned int color, int y, t_env *env)
 {
 	if (env->maze == 1)
+	{
+		if ((y == env->wall_h.y || y == env->wall_h.y - 1) && env->exit == 1)
+			return (YELLOW);
 		return (BLACK);
+	}
 	else
 		return (color);
 }

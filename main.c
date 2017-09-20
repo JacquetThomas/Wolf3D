@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 13:47:56 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/12 20:57:42 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/12 21:51:13 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,7 +61,7 @@ int		main(int ac, char **av)
 
 	(void)av;
 	map = "Ressources/map.wolf";
-	if (ac == 1 && is_wolfmap(map))
+	if (ac == 1)
 	{
 		env.cam.pos = search_player(map, &env);
 		ask_mode(&env);
