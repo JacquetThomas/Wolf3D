@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 13:36:33 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/12 21:00:57 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/12 21:19:12 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,7 @@ typedef struct			s_ray
 
 typedef struct			s_env
 {
+	int					exit;
 	time_t				start;
 	time_t				now;
 	int					run;
@@ -215,7 +216,7 @@ void					zoom(int keycode, t_env *env);
 */
 void					color_wall(t_env *env);
 void					print_player(unsigned int color, t_env *env);
-unsigned int			mod_color(unsigned int color, t_env *env);
+unsigned int			mod_color(unsigned int color, int y, t_env *env);
 unsigned int			dcolor(unsigned int color);
 int						moving_key(int key);
 
