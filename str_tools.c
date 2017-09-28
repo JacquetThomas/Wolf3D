@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/21 10:56:05 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/11 17:03:36 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/28 15:50:01 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ char			*readfile(int fd)
 	int		flag;
 
 	flag = 0;
-	buff = (char*)malloc(sizeof(char) * BUFF_SIZE + 1);
+	if (!(buff = (char*)malloc(sizeof(char) * BUFF_SIZE + 1)))
+		exit(0);
 	line = ft_strnew(1);
 	while ((ret = read(fd, buff, BUFF_SIZE)) > 0 && flag == 0)
 	{
