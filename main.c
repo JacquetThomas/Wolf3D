@@ -6,7 +6,7 @@
 /*   By: cjacquet <marvin@42.fr>                    +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2017/07/19 13:47:56 by cjacquet          #+#    #+#             */
-/*   Updated: 2017/09/12 21:51:13 by cjacquet         ###   ########.fr       */
+/*   Updated: 2017/09/28 15:39:15 by cjacquet         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int		analyze(char *str, t_env *env)
 {
+	static int	cpt = 10;
+
 	if (ft_strstr(str, "maze") != NULL)
 	{
 		env->maze = 1;
@@ -24,6 +26,8 @@ int		analyze(char *str, t_env *env)
 		env->maze = 0;
 		return (1);
 	}
+	if (--cpt == 0)
+		return (2);
 	ft_putendl("Choose your mode [vanilla | maze]");
 	return (0);
 }
@@ -50,6 +54,8 @@ void	ask_mode(t_env *env)
 			}
 			return ;
 		}
+		if (flag == 2)
+			error_str("Don't fuck w/ me, I quit.", env, 1);
 	}
 	free(ans);
 }
